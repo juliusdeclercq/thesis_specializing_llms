@@ -1,0 +1,4 @@
+# Configuration for the `accelerate launch` command. 
+distributed_type: NO  
+mixed_precision: bf16        # Matches --bf16 True for H100 training
+num_processes: 1
