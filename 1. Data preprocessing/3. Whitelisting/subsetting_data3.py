@@ -7,10 +7,7 @@ Created on Mon Apr  7 12:55:50 2025
 The goal of this script is to subset the textual data, which is stored in ~3300
 .tar-files, using only whitelisted form types (e.g. 10-Q, 10-K). The subset is
 to be stored in one .jsonl file, with one line for each filing. This will contain
-about 3.6 million filings, thus 3.6M lines in the file. The filings must have a
-randomized permutation, which is to be achieved using the `shuf` Unix-command in
-the SLURM terminal of the Snellius compute cluster, so that does not have to be
-done here.
+about 3.6 million filings, thus 3.6M lines in the file. 
 
 Simplified version focusing on core multiprocessing logic with batching.
 Assumes input data integrity and path validity. Minimal error handling.
@@ -58,9 +55,9 @@ def parse_arguments():
     return input_year_str, scratch_dir
 
 
-#%% Helper function for writing batches safely
+#%% Helper function for multiprocessing-safe writing of batches
 def write_batch(output_jsonl_path, lock, lines_batch):
-    """ Safely appends a batch of lines using a lock. Minimal error handling. """
+    """ Appends a batch of lines using a lock to avoid race conditions.  """
     if not lines_batch:
         return 0
     try:
@@ -172,7 +169,7 @@ def main():
     # --- Configuration ---
     input_limit = None # Set to integer for testing, None for all files
     default_year = 2012
-    write_batch_char_limit = 650 * 1024 * 1024
+    write_batch_char_limit = 650 * 1024 * 1024  # found through testing, limiting to avoid OOM errors
     # --- End Configuration ---
 
     paths = {}

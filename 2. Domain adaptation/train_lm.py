@@ -3,6 +3,9 @@
 Created on Mon Apr 14 16:28:57 2025
 
 @author: Julius de Clercq
+
+Training script using unsloth. Based on template provided by SURF at: 
+    https://github.com/sara-nl/LLM-finetune/blob/main/finetune_unsloth.py.
 """
 
 import unsloth # Importing first because it patches the transformers module.

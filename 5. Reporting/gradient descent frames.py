@@ -12,8 +12,6 @@ import os
 output_dir = 'gradient_descent_frames'
 os.makedirs(output_dir, exist_ok=True)
 
-# No dark background style - using default white background
-
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
@@ -64,7 +62,6 @@ fig, ax = plt.subplots(figsize=(10, 6))
 ax.set_xlim(-2, 4)
 ax.set_ylim(-2, 4)
 
-# Remove box but keep axes (now in black for white background)
 ax.spines['top'].set_visible(False)
 ax.spines['right'].set_visible(False)
 ax.spines['left'].set_color('black')

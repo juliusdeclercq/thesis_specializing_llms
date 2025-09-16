@@ -36,8 +36,9 @@ sns.heatmap(
     cmap="coolwarm",
     center=0,
     cbar_kws={"label": "Change in Embedding Value"},
-    xticklabels=int(num_positions/10),  # Show every 100th position label
-    yticklabels=int(embedding_dim/10)    # Show every 10th dimension label
+    # Show every 100th position and dimension label
+    xticklabels=int(num_positions/10),  
+    yticklabels=int(embedding_dim/10)
 )
 # plt.title("Change in Sinusoidal Embedding Across Positions")
 plt.xlabel("Position Index")

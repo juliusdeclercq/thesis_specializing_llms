@@ -85,7 +85,6 @@ def process_year(year, base_dir):
     return corrupt_files
 
 def main():
-    """Main execution function."""
     base_dir = "/projects/prjs1109/data/raw"
     YEARS = [2016]      # range(2012, 2025)
     LOG_FILE = "corrupt_files.log"

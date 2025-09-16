@@ -155,7 +155,7 @@ def main():
     start = t()
 
     # --- Configuration ---
-    write_batch_char_limit = 650 * 1024 * 1024
+    write_batch_char_limit = 650 * 1024 * 1024 # limiting to avoid OOM errors
     # --- End Configuration ---
 
     # Get input year

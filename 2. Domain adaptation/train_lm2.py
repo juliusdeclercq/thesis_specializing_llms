@@ -10,6 +10,16 @@ Created on Mon Apr 14 16:28:57 2025
 
 #%%             Monkey-patching progress bar
 
+# """
+# The progress bar gets printed each iteration, which drowns out my logs with
+# the 5k and 20k iterations, plus the thousands of validation iterations...
+
+# Tried to fix this by patching tqdm, but only managed to control the progress bar
+# for loading the model shards, which only has 4 iterations so that was not the 
+# problem. Patched every tqdm implementation, but nothing worked. Can't do much more
+# without diving into HF or Unsloth code, but that is a rabbit hole that the goal
+# does not justify.
+# """
 
 # # Monkey-patching progress bar. This still doesn't work though...
 # import os
@@ -174,7 +184,7 @@ def main(exp_args: ExperimentArguments, train_args: TrainingArguments):
 #         if not param.requires_grad:
 #             print(f"FROZEN: {name}, shape={param.shape}")
 #     
-#     exit(0) 
+#     exit(0)   
 # =============================================================================
     
     # Unfreezing all parameters. 

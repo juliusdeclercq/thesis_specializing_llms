@@ -305,7 +305,7 @@ if __name__ == "__main__":
 
         print("\n--- Shuffle process completed ---")
 
-        # Final Verification (Optional but recommended)
+        # Final verification
         print("Verification:")
         print(f"  Lines found in Pass 1: {pass1_lines:,}")
         print(f"  Lines written in Pass 2: {pass2_lines:,}")
@@ -328,7 +328,6 @@ if __name__ == "__main__":
         # Runs only if the try block completes without exceptions
         exit_code = 0
     finally:
-        # This block always runs, regardless of success or failure
 
         # --- No Automatic Cleanup ---
         if temp_dir_path and os.path.exists(temp_dir_path):

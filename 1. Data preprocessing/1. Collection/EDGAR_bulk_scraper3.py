@@ -142,7 +142,7 @@ def EDGAR_finished_download_lister(year):
 
     # Iterate over all files in the directory
     for filename in os.listdir(year_dir):
-        # Use a regular expression to find the first eight digits in the filename
+        # Use a regular expression (regex) to find the first eight digits in the filename
         match = re.match(r'^\d{8}', filename)
         if match:
             # Append the match to the list as a string

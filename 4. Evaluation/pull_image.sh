@@ -8,9 +8,13 @@ set -euo pipefail   # Making sure the script halts at an error.
 ############################### SET IMAGE ADDRESS ###############################
 #################################################################################
  
-IMAGE_ADDRESS="docker://nvcr.io/nvidia/tensorrt-llm/release:1.0.0rc2" # tensorrt-llm, rc2 is newest 
-IMAGE_NAME="tensorrt-llm"
+# Also used this script to try to build NVIDIA's tensorrt-llm image, but that failed through singularity/apptainer, which is the only available alternative to Docker on Snellius.  
+ 
+IMAGE_ADDRESS="docker://nvcr.io/tothemoon/pixiu:latest 
+IMAGE_NAME="PIXIU"
 
+# IMAGE_ADDRESS="docker://nvcr.io/nvidia/tensorrt-llm/release:1.0.0rc2" # tensorrt-llm, rc2 is newest 
+# IMAGE_NAME="tensorrt-llm"
 
 #################################################################################
 ############################## SET TEMP DIR #####################################

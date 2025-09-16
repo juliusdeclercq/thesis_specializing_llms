@@ -9,7 +9,7 @@ import random
 import os
 import tempfile
 import shutil
-import time
+from time import time
 import argparse
 from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -18,15 +18,23 @@ import math
 import traceback # Keep for printing tracebacks on error
 
 
+#%%     Globals
+
 # --- Configuration ---
+
 NUM_BUCKETS = 128
 MAX_WORKERS_PASS1 = int(os.environ["SLURM_CPUS_PER_TASK"])
 MAX_WORKERS_PASS2 = 4
 RANDOM_SEED = 98765432123456789
-# --- End Configuration ---
+
+# ---------------------
 
 # Global variable for file size (set in run_parallel_partition)
 file_size = 0
+
+
+#%%     Functions
+
 
 def parse_arguments():
     """Parses command-line arguments."""
@@ -159,7 +167,7 @@ def run_parallel_partition(input_file, temp_dir, num_buckets, num_workers):
     partition_chunk tasks in parallel using ProcessPoolExecutor.
     """
     print(f"[Pass 1] Starting parallel partitioning with {num_workers} workers...")
-    start_time = time.time()
+    start_time = time()
     global file_size # Access the global variable
     file_size = os.path.getsize(input_file)
     if file_size == 0:
@@ -190,12 +198,12 @@ def run_parallel_partition(input_file, temp_dir, num_buckets, num_workers):
             worker_files = future.result() # Raises exception if worker failed
             all_bucket_files.extend(worker_files)
 
-    elapsed = time.time() - start_time
+    elapsed = time() - start_time
     final_total_lines = total_lines_processed.value
     print(f"[Pass 1] Finished partitioning. Found {final_total_lines:,} total lines. [{elapsed:.2f} s]")
 
     if not all_bucket_files and file_size > 0:
-         # This check might be redundant if worker errors propagate, but harmless
+         # This check might be redundant if worker errors propagate, but harmless if not helpful
          raise RuntimeError("Pass 1 did not produce any bucket files despite non-empty input.")
     return all_bucket_files, final_total_lines # Return line count too
 
@@ -208,7 +216,7 @@ def process_logical_bucket(logical_bucket_index, input_filenames, train_filename
     """
     pid = os.getpid()
     print(f"  [Pass 2 - Worker {pid}] Processing logical bucket {logical_bucket_index:04d} ({len(input_filenames)} files)...")
-    start_time = time.time()
+    start_time = time()
     all_lines = []
     total_size_gb = 0
 
@@ -260,7 +268,7 @@ def process_logical_bucket(logical_bucket_index, input_filenames, train_filename
             total_lines_written_shared.value += (train_lines_written + eval_lines_written)
             eval_lines_written_shared.value += eval_lines_written
 
-    elapsed = time.time() - start_time
+    elapsed = time() - start_time
     print(f"  [Pass 2 - Worker {pid}] Finished logical bucket {logical_bucket_index:04d}. Wrote {train_lines_written:,} train lines, {eval_lines_written:,} eval lines. [{elapsed:.2f} s]")
     return train_lines_written, eval_lines_written
 
@@ -271,7 +279,7 @@ def shuffle_and_merge_buckets(all_bucket_filenames, train_filename, eval_filenam
     then processes each logical bucket in parallel with truncation and train-eval split.
     """
     print("\n[Pass 2] Starting shuffling and merging of logical buckets...")
-    start_time = time.time()
+    start_time = time()
 
     # Group filenames by logical bucket index
     grouped_buckets = [[] for _ in range(num_logical_buckets)]
@@ -315,24 +323,25 @@ def shuffle_and_merge_buckets(all_bucket_filenames, train_filename, eval_filenam
             total_eval_lines_written += eval_lines
             processed_bucket_count += 1
             if processed_bucket_count % (num_tasks // 20 or 1) == 0 or processed_bucket_count == num_tasks:
-                elapsed_pass2 = time.time() - start_time
+                elapsed_pass2 = time() - start_time
                 percent_done = (processed_bucket_count / num_tasks) * 100
                 print(f"  [Pass 2] Progress: {processed_bucket_count}/{num_tasks} buckets merged ({percent_done:.1f}%) [{elapsed_pass2:.2f} s]")
 
-    elapsed = time.time() - start_time
+    elapsed = time() - start_time
     print(f"\n[Pass 2] Finished merging {processed_bucket_count}/{num_tasks} logical buckets.")
     print(f"[Pass 2] Time taken: {elapsed:.2f} seconds.")
     print(f"[Pass 2] Total train lines written to '{os.path.basename(train_filename)}': {total_train_lines_written:,}")
     print(f"[Pass 2] Total eval lines written to '{os.path.basename(eval_filename)}': {total_eval_lines_written:,}")
     return total_train_lines_written, total_eval_lines_written
 
-# --- Main Execution Logic ---
+
+#%%     Main
 def main():
-    # Set random seed once at the start for replicability
+    # Setting random seed once at the start for replicability
     random.seed(RANDOM_SEED)
 
-    overall_start_time = time.time()
-    temp_dir_path = None  # Initialize to None
+    overall_start_time = time()
+    temp_dir_path = None 
 
     try:
         SCRATCH_DIR, PROJECT_DIR, INPUT_FILE, TRAIN_SIZE, EVAL_SIZE = parse_arguments()
@@ -411,7 +420,7 @@ def main():
                 print(f"Warning: Failed to remove temporary directory: {cleanup_error}")
                 print(f"You may need to manually remove: {temp_dir_path}")
 
-        overall_elapsed = time.time() - overall_start_time
+        overall_elapsed = time() - overall_start_time
         hours, rem = divmod(overall_elapsed, 3600)
         minutes, seconds = divmod(rem, 60)
         print(f"\nTotal execution time: {int(hours)} hours, {int(minutes)} minutes, {int(seconds)} seconds.")
