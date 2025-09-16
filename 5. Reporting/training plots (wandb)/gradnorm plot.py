@@ -17,11 +17,9 @@ df_train.columns = ["iteration", "gradient norm"]
 ITER_PER_EPOCH = 415
 df_train["epoch"] = df_train["iteration"] / ITER_PER_EPOCH
 
-# Set style
 sns.set_theme(style="whitegrid")
 sns.set_context("talk")
 
-# Create plot
 fig, ax = plt.subplots(figsize=(8, 5))
 
 # Gradient norm line (log scale on y-axis)
@@ -44,10 +42,8 @@ ax.grid(True, axis="y", linestyle="--", alpha=0.5)
 ax.grid(True, axis="x", linestyle="--", alpha=0.5)
 # ax.grid(False, axis="x")
 
-# Remove top/right borders
 sns.despine(ax=ax)
 
-# Labels
 ax.set_xlabel("Epoch")
 ax.set_ylabel("Gradient norm")
 

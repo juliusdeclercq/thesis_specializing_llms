@@ -30,17 +30,14 @@ val_data = [
     (10, 2.1864447593688965),
 ]
 
-# Convert to DataFrame
 val_df = pd.DataFrame(val_data, columns=["Epoch", "Loss"])
 
-# Set style
 sns.set_theme(style="whitegrid")
 sns.set_context("talk")
 
-# Create plot
 fig, ax = plt.subplots(figsize=(8, 5))
 
-# Training loss line
+# Training loss plot
 sns.lineplot(
     data=df_train,
     x="Epoch",
@@ -51,7 +48,7 @@ sns.lineplot(
     ax=ax
 )
 
-# Validation loss line (dashed with markers)
+# Validation loss plot
 sns.lineplot(
     data=val_df,
     x="Epoch",
@@ -72,10 +69,8 @@ ax.set_xlim(left=0)
 ax.grid(True, axis='y', linestyle='--', alpha=0.5)
 ax.grid(False, axis='x')
 
-# Remove top/right borders
 sns.despine(ax=ax)
 
-# Labels
 ax.set_xlabel("Epoch")
 ax.set_ylabel("Loss")
 
