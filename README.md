@@ -19,7 +19,7 @@ The code is organized by methodology section as much as possible. Directories wi
 5. Reporting scripts may be executed in any order.
 
 
-Note that all job scripts were executed using the `sbatch` command, and that jb\_whitelist.sh and jb\_subsetmerge.sh are executed with a positional argument denoting the year for which the data is to be subsetted (e.g., `sbatch jb_whitelist.sh 2015`). The output of the domain adaptation, instruction tuning, and evaluation rounds, are contained in SLURM logs in the `/Output` subdirectories of their corresponding methodological step. 
+Note that all job scripts were executed using the `sbatch` command, and that `jb_whitelist.sh` and `jb_subsetmerge.sh` are executed with a positional argument denoting the year for which the data is to be subsetted (e.g., `sbatch jb_whitelist.sh 2015`). The output of the domain adaptation, instruction tuning, and evaluation rounds, are contained in SLURM logs in the `/Output` subdirectories of their corresponding methodological step. 
 
 
 
