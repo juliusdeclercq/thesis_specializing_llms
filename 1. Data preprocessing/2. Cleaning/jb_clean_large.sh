@@ -13,7 +13,12 @@
 #SBATCH --mail-type=END
 #SBATCH --mail-user=j.l.h.de.clercq@businessdatascience.nl
 
-# This script was written because of OOM errors occurring in 2024. To resolve this, the largest filings of 2024 were processed separately with this script, as these formed the bottlenecks leading to OOM. 
+
+# This script was written because of OOM errors occurring in 2024. 
+# To resolve this, filings larger than 3GB were processed separately with this script, as these formed the bottlenecks leading to OOM. 
+# `crane.sh` is the script with which the files larger than 3GB were moved (scanned years 2020-2024, but only 2024 had those very large files.
+
+
 module load 2023
 module load Python/3.11.3-GCCcore-12.3.0
 module load SciPy-bundle/2023.07-gfbf-2023a
