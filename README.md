@@ -7,10 +7,10 @@ The code is organized by methodology section as much as possible. Directories wi
 1. 1. `EDGAR_bulk_scraper3.py`, `jb_inquisitor.sh`
    2. `crane3.sh`, `jb_clean.sh`, `jb_clean_large.sh`, `crane4.sh`
    3. `get_whitelist.py`, `jb_whitelist.sh`, `jb_subsetmerge.sh`
-   4. `jb_tokenize.sh`*, `jb_merge.sh`* (NB: `jb_merge.sh` was used to salvage tokenized data that failed to merge due to an OOM-kill event. Ideally only `jb_tokenize.sh` is needed.)
-   5. `jb_shuf.sh`*
+   4. `jb_tokenize.sh`\*, `jb_merge.sh`\* (NB: `jb_merge.sh` was used to salvage tokenized data that failed to merge due to an OOM-kill event. Ideally only `jb_tokenize.sh` is needed.)
+   5. `jb_shuf.sh`\*
 
-2. `create_venv.sh`, `jb_train.sh`*, `jb_split.sh`*
+2. `create_venv.sh`, `jb_train.sh`\*, `jb_split.sh`\*
 3. `convert_tatqa.py`, `merge_alpaca_tatqa.py`, `jb_instruct.sh`**
 4. `create_venv_PIXIU.sh`, `jb_eval.sh`***
 5. Reporting scripts may be executed in any order.
