@@ -16,9 +16,9 @@ The code is organized by methodology section as much as possible. Directories wi
 5. Reporting scripts may be executed in any order.
 
 
-* = these scripts were executed for both long- and short-sequence training (sequence lengths of 8192 and 2048 tokens, respectively).
-** = these scripts were executed for both the base, and long- and short-sequence domain-adapted models
-*** = this script was executed for the base, the two domain-adapted, and the three instruction-tuned models.
+- \* = these scripts were executed for both long- and short-sequence training (sequence lengths of 8192 and 2048 tokens, respectively).
+- \** = these scripts were executed for both the base, and long- and short-sequence domain-adapted models
+- \*** = this script was executed for the base, the two domain-adapted, and the three instruction-tuned models.
 
 Note that all job scripts were executed using the `sbatch` command, and that `jb_whitelist.sh` and `jb_subsetmerge.sh` are executed with a positional argument denoting the year for which the data is to be subsetted (e.g., `sbatch jb_whitelist.sh 2015`). The output of the domain adaptation, instruction tuning, and evaluation rounds, are contained in SLURM logs in the `/Output` subdirectories of their corresponding methodological step. 
 
